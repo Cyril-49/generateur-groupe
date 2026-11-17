@@ -5,19 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Générateur de Groupes Équilibrés</title>
   <link rel="stylesheet" href="../style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
-
-  <main class="container">
-    <header>
-      <nav><a href="../index.html">← Accueil</a> | <a href="eleves.html">👥 Gérer les élèves & matières</a></nav>
+  <header>
       <h1>Générateur de Groupes Équilibrés</h1>
       <p>Sélectionnez votre classe et la matière pour équilibrer les notes et charger les contraintes dédiées.</p>
+      <nav><a href="../index.html">← Accueil</a> | <a href="eleves.html">👥 Gérer les élèves & matières</a></nav>
     </header>
-
+  <main class="container">  
     <!-- Étape 1 : Choix de la classe et de la matière -->
     <section class="card">
-      <h2>1. Paramètres de travail</h2>
+      <h2><div>1</div> Paramètres de travail</h2>
       <div class="form-row">
         <div>
           <label style="font-size: 0.85rem; color: var(--text-muted); display: block;">Classe :</label>
@@ -38,11 +39,7 @@
 
     <!-- Étape 2 : Définition des exclusions propres à la matière -->
     <section class="card">
-      <div style="display: flex; justify-content: space-between; align-items: center;">
-        <h2>2. Séparations pour <span id="current-subject-label" style="color: var(--primary);">cette matière</span></h2>
-        <button type="button" id="btn-clear-exclusions" class="btn-remove">✕ Vider ces contraintes</button>
-      </div>
-
+      <h2><div>2</div> <p>Séparations pour <span id="current-subject-label" style="color: var(--primary);">cette matière</span></p></h2>
       <div class="form-row" style="margin-top: 1rem;">
         <select id="select-person-a">
           <option value="">Sélectionner une personne A</option>
@@ -53,7 +50,9 @@
         </select>
         <button type="button" id="btn-add-exclusion">Ajouter la contrainte</button>
       </div>
-
+      <div class="vider-contraintes">
+        <button type="button" id="btn-clear-exclusions" class="btn-remove">✕ Vider ces contraintes</button>
+      </div>
       <div class="list-wrapper">
         <h3>Contraintes actives pour cette matière (<span id="total-exclusions">0</span>)</h3>
         <ul id="exclusions-list"></ul>
@@ -62,8 +61,13 @@
 
     <!-- Étape 3 : Création des groupes -->
     <section class="card">
-      <h2>3. Générer les groupes</h2>
-      <div id="thresholds-info" class="thresholds-banner" hidden></div>
+      <h2><div>3</div> Générer les groupes</h2>
+      <div id="thresholds-info" class="thresholds-banner">
+    Seuils pour <strong>Général</strong> :
+    ★ fort ≥ <strong>15</strong>
+    · ▽ faible ≤ <strong>8</strong>
+    <span style="margin-left: 0.35rem;">(modifiables dans le répertoire élèves)</span>
+  </div>
       <div class="form-row">
         <label for="group-count">Nombre de groupes :</label>
         <input type="number" id="group-count" min="2" value="2">
@@ -73,9 +77,9 @@
 
     <!-- Étape 4 : Résultats, Sauvegarde & Scission -->
         <section class="card results-card" id="results-container">
-          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
-            <h2>Résultats des Groupes</h2>
-            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+          <h2><div>4</div>Résultats des Groupes</h2>
+          <div>            
+            <div>
               <button type="button" id="btn-export-doc" class="btn-sm">
                 📄 Exporter Word / OpenOffice
               </button>
@@ -87,7 +91,7 @@
               </label>
               <input type="file" id="import-groups-file" accept=".json" style="display: none;">
             </div>
-            <p style="width: 100%; margin: 0; font-size: 0.85rem; color: var(--text-muted);">
+            <p>
               Astuce : glissez un élève d’un groupe vers un autre pour le déplacer ; les autres groupes se rééquilibrent automatiquement.
             </p>
           </div>

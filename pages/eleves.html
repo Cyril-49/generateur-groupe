@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestion des Classes et Matières</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <main class="container">
+    <header>
+      <nav><a href="../index.html">← Accueil</a> | <a href="generateur.html">⚡ Aller au Générateur</a></nav>
+      <h1>Répertoire des Élèves par Classe</h1>
+      <p>Créez vos classes, ajoutez vos matières et attribuez des notes personnalisées.</p>
+    </header>
+
+    <!-- 1. Sélection & création de classe -->
+    <section class="card">
+      <h2>1. Classe active</h2>
+      <div class="form-row">
+        <select id="class-select"></select>
+        <input type="text" id="new-class-name" placeholder="Nom de la nouvelle classe (ex: 4ème B)">
+        <button type="button" id="btn-add-class">Créer la classe</button>
+        <button type="button" id="btn-delete-class" class="btn-remove">✕ Supprimer cette classe</button>
+      </div>
+    </section>
+
+    <!-- 2. Gestion des matières de la classe -->
+    <section class="card">
+      <h2>2. Matières et seuils de notes</h2>
+      <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 0.75rem;">
+        Pour chaque matière, définissez à partir de quelle note un élève est considéré <strong>fort</strong> ou <strong>faible</strong> (utilisé pour l’équilibrage des groupes).
+      </p>
+      <div class="form-row">
+        <input type="text" id="new-subject-name" placeholder="Nouvelle matière (ex: EPS, Maths)">
+        <button type="button" id="btn-add-subject">Ajouter la matière</button>
+      </div>
+      <div class="list-wrapper">
+        <ul id="subjects-list" class="subjects-thresholds-list"></ul>
+      </div>
+    </section>
+
+    <!-- 3. Ajout / Modification d'un élève -->
+    <section class="card">
+      <h2>3. Ajouter un élève dans la classe</h2>
+      <form id="student-form">
+        <div class="form-row">
+          <input type="text" id="student-name" placeholder="Nom & Prénom" required>
+        </div>
+        <div id="subject-scores-inputs" class="form-row" style="margin-top: 0.75rem;">
+          <!-- Des champs de note s'afficheront dynamiquement pour chaque matière créée -->
+        </div>
+        <button type="submit" style="margin-top: 0.75rem;">Enregistrer l'élève</button>
+      </form>
+    </section>
+
+    <!-- Sécurité / Sauvegarde complète externe -->
+        <section class="card backup-card">
+          <h2>Sauvegarde intégrale de secours</h2>
+          <p style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1rem;">
+            Exportez l'ensemble de votre espace (toutes les classes, matières, élèves, notes et règles d'exclusion) dans un fichier de secours sur votre ordinateur.
+          </p>
+        
+          <div class="form-row">
+            <button type="button" id="btn-export-backup" class="btn-success">
+              ⬇ Télécharger la sauvegarde complète
+            </button>
+            <label for="backup-file-input" class="btn-file">
+              ⇪ Restaurer la sauvegarde complète
+            </label>
+            <input type="file" id="backup-file-input" accept=".json" style="display: none;">
+          </div>
+        </section>
+
+    <!-- 4. Liste des élèves de la classe -->
+    <section class="card">
+      <h2>Élèves de la classe (<span id="total-students">0</span>)</h2>
+      <ul id="students-list"></ul>
+    </section>
+  </main>
+
+  <script src="../script/eleves.js"></script>
+</body>
+</html>

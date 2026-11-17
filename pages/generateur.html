@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Générateur de Groupes Équilibrés</title>
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <main class="container">
+    <header>
+      <nav><a href="../index.html">← Accueil</a> | <a href="eleves.html">👥 Gérer les élèves & matières</a></nav>
+      <h1>Générateur de Groupes Équilibrés</h1>
+      <p>Sélectionnez votre classe et la matière pour équilibrer les notes et charger les contraintes dédiées.</p>
+    </header>
+
+    <!-- Étape 1 : Choix de la classe et de la matière -->
+    <section class="card">
+      <h2>1. Paramètres de travail</h2>
+      <div class="form-row">
+        <div>
+          <label style="font-size: 0.85rem; color: var(--text-muted); display: block;">Classe :</label>
+          <select id="gen-class-select"></select>
+        </div>
+        <div>
+          <label style="font-size: 0.85rem; color: var(--text-muted); display: block;">Matière évaluée :</label>
+          <select id="gen-subject-select"></select>
+        </div>
+        <button type="button" id="btn-sync" class="btn-success" style="align-self: flex-end;">↻ Actualiser</button>
+      </div>
+
+      <div class="list-wrapper" style="margin-top: 1rem;">
+        <h3>Élèves pris en compte (<span id="total-participants">0</span>)</h3>
+        <ul id="people-list"></ul>
+      </div>
+    </section>
+
+    <!-- Étape 2 : Définition des exclusions propres à la matière -->
+    <section class="card">
+      <div style="display: flex; justify-content: space-between; align-items: center;">
+        <h2>2. Séparations pour <span id="current-subject-label" style="color: var(--primary);">cette matière</span></h2>
+        <button type="button" id="btn-clear-exclusions" class="btn-remove">✕ Vider ces contraintes</button>
+      </div>
+
+      <div class="form-row" style="margin-top: 1rem;">
+        <select id="select-person-a">
+          <option value="">Sélectionner une personne A</option>
+        </select>
+        <span>ne doit pas être avec</span>
+        <select id="select-person-b">
+          <option value="">Sélectionner une personne B</option>
+        </select>
+        <button type="button" id="btn-add-exclusion">Ajouter la contrainte</button>
+      </div>
+
+      <div class="list-wrapper">
+        <h3>Contraintes actives pour cette matière (<span id="total-exclusions">0</span>)</h3>
+        <ul id="exclusions-list"></ul>
+      </div>
+    </section>
+
+    <!-- Étape 3 : Création des groupes -->
+    <section class="card">
+      <h2>3. Générer les groupes</h2>
+      <div id="thresholds-info" class="thresholds-banner" hidden></div>
+      <div class="form-row">
+        <label for="group-count">Nombre de groupes :</label>
+        <input type="number" id="group-count" min="2" value="2">
+        <button type="button" id="btn-generate">Créer les groupes</button>
+      </div>
+    </section>
+
+    <!-- Étape 4 : Résultats, Sauvegarde & Scission -->
+        <section class="card results-card" id="results-container">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
+            <h2>Résultats des Groupes</h2>
+            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+              <button type="button" id="btn-export-doc" class="btn-sm">
+                📄 Exporter Word / OpenOffice
+              </button>
+              <button type="button" id="btn-export-groups" class="btn-success btn-sm">
+                { } Exporter Groupes
+              </button>
+              <label for="import-groups-file" class="btn-file btn-file-sm">
+                ⇪ Charger des groupes
+              </label>
+              <input type="file" id="import-groups-file" accept=".json" style="display: none;">
+            </div>
+            <p style="width: 100%; margin: 0; font-size: 0.85rem; color: var(--text-muted);">
+              Astuce : glissez un élève d’un groupe vers un autre pour le déplacer ; les autres groupes se rééquilibrent automatiquement.
+            </p>
+          </div>
+        
+          <div id="groups-display" class="groups-grid"></div>
+        </section>
+  </main>
+
+  <div id="export-doc-modal" class="modal" hidden>
+    <div class="modal-backdrop" data-close-export-modal></div>
+    <div class="modal-dialog" role="dialog" aria-modal="true" aria-labelledby="export-doc-title">
+      <h3 id="export-doc-title">Exporter Word / OpenOffice</h3>
+      <p>Choisissez le contenu du document.</p>
+      <label class="modal-check">
+        <input type="checkbox" id="export-include-scores" checked>
+        Inclure les notes des élèves
+      </label>
+      <div class="modal-actions">
+        <button type="button" class="btn-neutral btn-sm" data-close-export-modal>Annuler</button>
+        <button type="button" id="btn-confirm-export-doc" class="btn-sm">Exporter</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../script/generateur.js"></script>
+</body>
+</html>

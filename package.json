@@ -1,0 +1,11 @@
+{
+  "name": "generateur-groupes",
+  "version": "1.0.0",
+  "main": "index.html",
+  "window": {
+    "title": "Générateur de Groupes Équilibrés",
+    "width": 1100,
+    "height": 850,
+    "resizable": true
+  }
+}

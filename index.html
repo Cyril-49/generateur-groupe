@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestionnaire de Classe & Groupes</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .menu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    .menu-card {
+      text-decoration: none;
+      color: inherit;
+      border: 2px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem 1.5rem;
+      background: var(--card-bg);
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.75rem;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      animation: fadeUp 0.5s ease both;
+    }
+    .menu-card:nth-child(1) { animation-delay: 0.05s; }
+    .menu-card:nth-child(2) { animation-delay: 0.15s; }
+    .menu-card:hover {
+      transform: translateY(-4px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 20px -8px rgba(29, 78, 216, 0.25);
+    }
+    .menu-icon {
+      font-size: 2.5rem;
+      transition: transform 0.25s ease;
+    }
+    .menu-card:hover .menu-icon {
+      transform: scale(1.12) rotate(-4deg);
+    }
+    .menu-card h2 {
+      font-size: 1.3rem;
+      color: var(--primary);
+      border: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    /* Notice */
+    .notice-card {
+      margin-top: 0.5rem;
+      overflow: hidden;
+      position: relative;
+      animation: fadeUp 0.55s ease 0.25s both;
+    }
+    .notice-card::before {
+      content: "";
+      position: absolute;
+      inset: 0 0 auto 0;
+      height: 4px;
+      background: linear-gradient(90deg, var(--primary), var(--success), var(--accent));
+      background-size: 200% 100%;
+      animation: shimmer 4s ease-in-out infinite;
+    }
+    .notice-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 1.25rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .notice-header h2 {
+      margin: 0;
+      border: none;
+      padding: 0;
+    }
+    .notice-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: 50%;
+      background: #eff6ff;
+      color: var(--primary);
+      font-size: 1.15rem;
+      animation: softPulse 2.4s ease-in-out infinite;
+    }
+
+    .notice-steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 0.85rem;
+      margin-bottom: 1.5rem;
+      list-style: none;
+    }
+    .notice-step {
+      background: #f8fafc;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1rem 0.9rem;
+      text-align: center;
+      transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+      animation: fadeUp 0.45s ease both;
+    }
+    .notice-step:nth-child(1) { animation-delay: 0.35s; }
+    .notice-step:nth-child(2) { animation-delay: 0.45s; }
+    .notice-step:nth-child(3) { animation-delay: 0.55s; }
+    .notice-step:nth-child(4) { animation-delay: 0.65s; }
+    .notice-step:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary);
+      box-shadow: 0 8px 16px -10px rgba(29, 78, 216, 0.35);
+    }
+    .notice-step-num {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 1.75rem;
+      height: 1.75rem;
+      margin-bottom: 0.5rem;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+    .notice-step strong {
+      display: block;
+      color: var(--text-main);
+      font-size: 0.9rem;
+      margin-bottom: 0.3rem;
+    }
+    .notice-step span {
+      display: block;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+
+    .notice-points {
+      display: grid;
+      gap: 0.85rem;
+    }
+    .notice-point {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.9rem;
+      align-items: start;
+      padding: 1rem 1.1rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      background: #fff;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      animation: fadeUp 0.45s ease both;
+    }
+    .notice-point:nth-child(1) { animation-delay: 0.7s; }
+    .notice-point:nth-child(2) { animation-delay: 0.8s; }
+    .notice-point:nth-child(3) { animation-delay: 0.9s; }
+    .notice-point:hover {
+      transform: translateX(4px);
+      box-shadow: var(--shadow);
+    }
+    .notice-point-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .notice-point.export .notice-point-icon { background: #ecfeff; }
+    .notice-point.privacy .notice-point-icon { background: #eff6ff; }
+    .notice-point.warning .notice-point-icon { background: #fff7ed; }
+    .notice-point h3 {
+      text-transform: none;
+      letter-spacing: normal;
+      color: var(--text-main);
+      font-size: 1rem;
+      margin: 0 0 0.35rem;
+    }
+    .notice-point p,
+    .notice-point ul {
+      margin: 0;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+    .notice-point ul {
+      margin-top: 0.4rem;
+      padding-left: 1.1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    .notice-warn {
+      margin-top: 1rem;
+      padding: 0.85rem 1rem;
+      background: #fff7ed;
+      border-left: 3px solid var(--accent);
+      border-radius: var(--radius);
+      color: var(--text-main);
+      font-size: 0.9rem;
+      animation: fadeUp 0.45s ease 1s both, warnGlow 2.8s ease-in-out 1.2s infinite;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes softPulse {
+      0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(29, 78, 216, 0.2); }
+      50% { transform: scale(1.05); box-shadow: 0 0 0 8px rgba(29, 78, 216, 0); }
+    }
+    @keyframes shimmer {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+    @keyframes warnGlow {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(194, 65, 12, 0); }
+      50% { box-shadow: 0 0 0 4px rgba(194, 65, 12, 0.08); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .menu-card,
+      .notice-card,
+      .notice-step,
+      .notice-point,
+      .notice-warn,
+      .notice-badge,
+      .notice-card::before {
+        animation: none !important;
+      }
+      .menu-card:hover,
+      .notice-step:hover,
+      .notice-point:hover,
+      .menu-card:hover .menu-icon {
+        transform: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="container">
+    <header>
+      <h1>Portail Enseignant</h1>
+      <p>Gérez vos classes et équilibrez vos groupes sans base de données.</p>
+    </header>
+
+    <div class="menu-grid">
+      <a href="./pages/eleves.html" class="menu-card">
+        <span class="menu-icon">👥</span>
+        <h2>1. Répertoire des Élèves</h2>
+        <p>Créer, modifier et stocker la liste de vos élèves et leurs notes en mémoire.</p>
+      </a>
+
+      <a href="./pages/generateur.html" class="menu-card">
+        <span class="menu-icon">⚡</span>
+        <h2>2. Générateur de Groupes</h2>
+        <p>Définir les exclusions, calculer les groupes équilibrés et les scinder en deux.</p>
+      </a>
+    </div>
+
+    <section class="card notice-card">
+      <div class="notice-header">
+        <span class="notice-badge" aria-hidden="true">📘</span>
+        <h2>Notice d’utilisation</h2>
+      </div>
+
+      <ol class="notice-steps">
+        <li class="notice-step">
+          <span class="notice-step-num">1</span>
+          <strong>Répertoire</strong>
+          <span>Créez la classe, les matières, puis les élèves et leurs notes.</span>
+        </li>
+        <li class="notice-step">
+          <span class="notice-step-num">2</span>
+          <strong>Générateur</strong>
+          <span>Choisissez classe & matière, ajoutez les séparations, générez.</span>
+        </li>
+        <li class="notice-step">
+          <span class="notice-step-num">3</span>
+          <strong>Ajustez</strong>
+          <span>Glissez un élève d’un groupe à l’autre pour rééquilibrer.</span>
+        </li>
+        <li class="notice-step">
+          <span class="notice-step-num">4</span>
+          <strong>Exportez</strong>
+          <span>Sauvegarde complète ou export Word / groupes.</span>
+        </li>
+      </ol>
+
+      <div class="notice-points">
+        <article class="notice-point export">
+          <div class="notice-point-icon" aria-hidden="true">💾</div>
+          <div>
+            <h3>Aucune sauvegarde en ligne</h3>
+            <p>
+              Rien n’est enregistré sur un serveur. Les données restent uniquement dans
+              <strong>votre navigateur</strong>. Exportez régulièrement pour ne rien perdre.
+            </p>
+          </div>
+        </article>
+
+        <article class="notice-point privacy">
+          <div class="notice-point-icon" aria-hidden="true">🔒</div>
+          <div>
+            <h3>Anonymat et confidentialité</h3>
+            <p>
+              Aucune donnée n’est transmise, collectée ni partagée. Listes, notes et groupes
+              restent sur votre appareil tant que vous ne les exportez pas vous-même.
+            </p>
+          </div>
+        </article>
+
+        <article class="notice-point warning">
+          <div class="notice-point-icon" aria-hidden="true">🧹</div>
+          <div>
+            <h3>Quand les données disparaissent</h3>
+            <ul>
+              <li>Effacement des données / cookies / stockage du site</li>
+              <li>Navigation privée puis fermeture de la fenêtre</li>
+              <li>Changement de navigateur, d’ordinateur ou de profil sans import</li>
+            </ul>
+          </div>
+        </article>
+      </div>
+
+      <p class="notice-warn">
+        En cas de doute, exportez une sauvegarde complète avant de quitter ou de nettoyer le navigateur.
+      </p>
+    </section>
+  </main>
+</body>
+</html>

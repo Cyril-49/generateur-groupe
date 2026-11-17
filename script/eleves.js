@@ -145,15 +145,17 @@ function renderSubjects() {
     li.className = 'subject-threshold-row';
     li.innerHTML = `
       <span class="subject-name">${subject}</span>
-      <label>
-        ★ Fort à partir de
-        <input type="number" step="0.5" min="0" max="100" data-subject="${subject}" data-kind="strong" value="${t.strong}">
-      </label>
-      <label>
-        ▽ Faible jusqu’à
-        <input type="number" step="0.5" min="0" max="100" data-subject="${subject}" data-kind="weak" value="${t.weak}">
-      </label>
-      <button type="button" class="btn-remove" onclick="removeSubject('${subject}')">✕</button>
+      <div>
+        <label>
+          ★ Fort à partir de
+          <input type="number" step="0.5" min="0" max="100" data-subject="${subject}" data-kind="strong" value="${t.strong}">
+        </label>
+        <label>
+          ▽ Faible jusqu’à
+          <input type="number" step="0.5" min="0" max="100" data-subject="${subject}" data-kind="weak" value="${t.weak}">
+        </label>
+        <button type="button" class="btn-remove" onclick="removeSubject('${subject}')">✕</button>
+      </div>
     `;
     subjectsList.appendChild(li);
 
